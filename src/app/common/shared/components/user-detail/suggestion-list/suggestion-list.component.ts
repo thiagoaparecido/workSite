@@ -9,7 +9,7 @@ export class SuggestionListComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }
