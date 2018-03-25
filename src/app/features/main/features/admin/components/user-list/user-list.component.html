@@ -1,0 +1,50 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col" (click)="changeSort('firstName')">
+      Ім'я
+      <img
+        *ngIf="sortProp == 'firstName'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('city')">
+      Місто
+      <img
+        *ngIf="sortProp == 'city'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('email')">
+      Емейл
+      <img
+        *ngIf="sortProp == 'email'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('gender')">
+      Стать
+      <img
+        *ngIf="sortProp == 'gender'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of users | async | orderByProp:sortProp:sortOrder">
+    <td>{{ user.firstName }} {{ user.surName }}</td>
+    <td>{{ user.city }}</td>
+    <td>{{ user.email }}</td>
+    <td>{{ user.gender | gender }}</td>
+    <td>
+      <button class="btn btn-sm btn-primary" (click)="goToDetail(user.id)">Детальніше</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

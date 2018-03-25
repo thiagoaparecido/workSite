@@ -1,0 +1,12 @@
+th {
+  cursor: pointer;
+}
+
+.caret.active {
+  transform: rotate(180deg);
+}
+
+.search {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

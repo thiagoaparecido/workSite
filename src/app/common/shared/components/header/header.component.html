@@ -1,0 +1,24 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <a routerLink="/" class="navbar-brand">Робота в Україні</a>
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" (click)="dexie()">Dexie</a>
+    </li>
+    <ng-template [ngIf]="!isAuth">
+      <li routerLink="/auth/signin" class="nav-item">
+        <a class="nav-link" >Увійти</a>
+      </li>
+      <li routerLink="/auth/signup" class="nav-item">
+        <a class="nav-link" >Зареєструватися</a>
+      </li>
+    </ng-template>
+    <ng-template [ngIf]="isAuth">
+      <li class="nav-item">
+        <a class="nav-link" (click)="goToCabinet()" >Мій Кабінет</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()" >Вийти</a>
+      </li>
+    </ng-template>
+  </ul>
+</nav>

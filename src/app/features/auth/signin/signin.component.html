@@ -1,0 +1,25 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="col-8 m-auto">
+  <h1>Вхід:</h1>
+  <div class="form-group">
+    <label for="email">Введіть електронну адресу:</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      formControlName="email">
+  </div>
+  <div class="form-group">
+    <label for="password">Введіть пароль:</label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      class="form-control"
+      formControlName="password">
+  </div>
+  <button type="submit" class="btn btn-success">Увійти</button>
+  <div *ngIf="notAccessMSG" class="alert alert-danger notAccessMSG">
+    Ви ввели невірну електронну адресу чи пароль!!!
+  </div>
+</form>

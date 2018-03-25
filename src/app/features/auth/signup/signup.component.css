@@ -1,0 +1,15 @@
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
+
+/*.passwordGroup.ng-invalid.ng-touched input {
+  border-color: red;
+}*/
+
+input.nomatch {
+  border-color: red;
+}
+
+form {
+  padding-bottom: 30px;
+}

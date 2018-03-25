@@ -1,0 +1,75 @@
+<div class="row user-detail-container">
+  <div class="col-md-8 m-auto">
+    <div class="row">
+      <h1 class="col-md-12">Особисті дані</h1>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Ім'я</h5>
+          </div>
+          <div class="col-sm-6">
+            {{user.firstName}} {{user.surName}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Стать</h5>
+          </div>
+          <div class="col-sm-6">
+            {{user.gender | gender}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Дата народження</h5>
+          </div>
+          <div class="col-sm-6">
+            {{user.dateOfBirth | date: 'dd/MM/yyyy'}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Електронна адреса</h5>
+          </div>
+          <div class="col-sm-6">
+            {{user.email}}
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Місто проживання</h5>
+          </div>
+          <div class="col-sm-6">
+            {{user.city}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <a class="btn btn-primary" [routerLink]="['/user', 'edit']" role="button">Редагувати</a>
+      </div>
+    </div>
+  </div>
+</div>
+<ul class="nav nav-tabs">
+  <li (click)="changeTab()" class="nav-item">
+    <a class="nav-link" [class.active]="tab">Резюме</a>
+  </li>
+  <li (click)="changeTab()" class="nav-item">
+    <a class="nav-link" [class.active]="!tab">Пропозиції</a>
+  </li>
+</ul>
+<ng-container *ngIf="user">
+  <app-resume-list *ngIf="tab" [user]="user"></app-resume-list>
+  <app-suggestion-list *ngIf="!tab"></app-suggestion-list>
+</ng-container>
+

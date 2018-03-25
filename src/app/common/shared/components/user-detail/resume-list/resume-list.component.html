@@ -1,0 +1,23 @@
+<div class="row">
+  <div class="col-12 btn-container">
+    <button [routerLink]="['/user','resume','new']" class="btn btn-primary" type="button">
+      Додати
+    </button>
+  </div>
+  <div class="col-12">
+    <div class="row justify-content-around">
+      <app-resume-item
+        [user]="user"
+        [resume]="resume"
+        *ngFor="let resume of $resumes"
+        (deleteResume)="deleteResume($event)"></app-resume-item>
+    </div>
+    <div *ngIf="!noResumesMsg " class="col-12">
+      <div class="row justify-content-around">
+        <span>
+          У вас немає резюме. Натисніть "Додати" для створення нового резюме
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

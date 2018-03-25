@@ -1,0 +1,80 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="col-8 m-auto">
+  <h1>Редагування даних</h1>
+  <div class="form-group">
+    <label for="email">Введіть електронну адресу:</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="Приклад: example@example.com"
+      formControlName="email">
+    <div *ngIf="!form.get('email').valid && form.get('email').touched" class="alert alert-danger">
+      Електронна адреса є обов'язковою для заповнення
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6">
+      <label for="firstName">Введіть ім'я:</label>
+      <input
+        type="text"
+        id="firstName"
+        name="firstName"
+        class="form-control"
+        placeholder="Ім'я"
+        formControlName="firstName">
+    </div>
+    <div class="col-md-6">
+      <label for="surName">Введіть прізвище:</label>
+      <input
+        type="text"
+        id="surName"
+        name="surName"
+        class="form-control"
+        placeholder="Прізвище"
+        formControlName="surName">
+    </div>
+  </div>
+  <div
+    *ngIf="(!form.get('firstName').valid || !form.get('surName').valid) && (form.get('firstName').touched || form.get('surName').touched)"
+    class="alert alert-danger">
+    Прізвище та ім'я є обов'язковими для заповнення
+  </div>
+  <div class="form-group">
+    <label for="dateOfBirth">Введіть дату народження:</label>
+    <my-date-picker
+      id="dateOfBirth"
+      [formControlName]="'dateOfBirth'"
+      placeholder="день.місяць.рік"
+      [options]="{dateFormat: 'dd.mm.yyyy'}"></my-date-picker>
+    <div class="alert alert-danger" *ngIf="!form.get('dateOfBirth').valid && form.get('dateOfBirth').touched">
+      Дата народження є обов'язковою для заповнення
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Стать:</label>
+    <div class="form-check form-check-inline">
+      <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="male" value="male">
+      <label class="form-check-label" for="male">Чоловік</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female">
+      <label class="form-check-label" for="female">Жінка</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city">Введіть місто проживання:</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      class="form-control"
+      placeholder="Місто"
+      formControlName="city">
+    <div *ngIf="!form.get('city').valid && form.get('city').touched" class="alert alert-danger">
+      Введіть місто, поле обов'язкове для заповнення!
+    </div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!form.valid">Редагувати</button>
+  <button type="button" class="btn btn-primary" (click)="reset()">Скинути</button>
+</form>

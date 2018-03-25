@@ -1,0 +1,127 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="col-8 m-auto">
+  <h1>Реєстрація</h1>
+  <div class="form-group">
+    <label for="email">Введіть електронну адресу:</label>
+    <input
+      type="text"
+      id="email"
+      name="email"
+      class="form-control"
+      placeholder="Приклад: example@example.com"
+      formControlName="email">
+      <div *ngIf="!form.get('email').valid && form.get('email').touched">
+        <div *ngIf="form.get('email').errors['required']" class="alert alert-danger">
+          Електронна адреса є обов'язковою для заповнення!
+        </div>
+        <div *ngIf="!form.get('email').errors['required'] && form.get('email').errors['email']" class="alert alert-danger">
+          Ви ввели невірний емейл!
+        </div>
+        <div *ngIf="form.get('email').errors?.matchemail" class="alert alert-danger">
+          Введена вами електронна адреса вже існує!
+        </div>
+      </div>
+  </div>
+  <div formGroupName="passwordGroup" class="form-row passwordGroup">
+    <div class="col-md-6">
+      <label for="password">Введіть пароль:</label>
+      <input
+        [class.nomatch]="
+          form.get('passwordGroup').errors?.nomatch &&
+          form.get('passwordGroup.password1').touched &&
+          form.get('passwordGroup.password2').touched"
+        type="password"
+        id="password"
+        name="password"
+        class="form-control password"
+        placeholder="Пароль"
+        formControlName="password1">
+    </div>
+    <div class="col-md-6">
+      <label for="password2">Повторіть пароль:</label>
+      <input
+        [class.nomatch]="
+          form.get('passwordGroup').errors?.nomatch &&
+          form.get('passwordGroup.password1').touched &&
+          form.get('passwordGroup.password2').touched"
+        type="password"
+        id="password2"
+        name="password2"
+        class="form-control password2"
+        placeholder="Повторити пароль"
+        formControlName="password2">
+    </div>
+  </div>
+  <div *ngIf="form.get('passwordGroup').invalid">
+    <div *ngIf="
+        (form.get('passwordGroup.password1').errors?.required && form.get('passwordGroup.password1').touched) ||
+        (form.get('passwordGroup.password2').errors?.required && form.get('passwordGroup.password2').touched)" class="alert alert-danger">
+      Поля паролів є обов'язковими для введення!
+    </div>
+    <div *ngIf="(form.get('passwordGroup.password1').touched && form.get('passwordGroup.password2').touched) &&
+        (form.get('passwordGroup').errors?.nomatch &&
+        (!form.get('passwordGroup.password1').errors?.required && !form.get('passwordGroup.password2').errors?.required))" class="alert alert-danger">
+      Введені вами паролі не співпадають!
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-6">
+      <label for="firstname">Введіть ім'я:</label>
+      <input
+        type="text"
+        id="firstname"
+        name="firstname"
+        class="form-control"
+        placeholder="Ім'я"
+        formControlName="firstName">
+    </div>
+    <div class="col-md-6">
+      <label for="lastname">Введіть прізвище:</label>
+      <input
+        type="text"
+        id="lastname"
+        name="lastname"
+        class="form-control"
+        placeholder="Прізвище"
+        formControlName="surName">
+    </div>
+  </div>
+  <div *ngIf="(form.get('firstName').invalid && form.get('firstName').touched) ||
+              (form.get('surName').invalid && form.get('surName').touched)" class="alert alert-danger">
+    Поля ім'я та прізвище є обов'язковими для заповнення!
+  </div>
+  <div class="form-group">
+    <label for="date">Введіть дату народження:</label>
+    <my-date-picker [formControlName]="'dateOfBirth'"
+                    [options]="{dateFormat: 'dd.mm.yyyy'}"
+                    id="date" placeholder="день.місяць.рік"></my-date-picker>
+    <!--div *ngIf="form.get('dateOfBirth').invalid && form.get('dateOfBirth').touched" class="alert alert-danger">
+      Дата народження є обов'язковим для заповнення!
+    </div-->
+  </div>
+  <div class="form-group">
+    <label>Стать:</label>
+    <div class="form-check form-check-inline">
+      <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="male" value="male">
+      <label class="form-check-label" for="male">Чоловік</label>
+    </div>
+    <div class="form-check form-check-inline">
+      <input formControlName="gender" class="form-check-input" type="radio" name="gender" id="female" value="female">
+      <label class="form-check-label" for="female">Жінка</label>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city">Введіть місто проживання:</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      class="form-control"
+      placeholder="Місто"
+      formControlName="city">
+      <div *ngIf="form.get('city').invalid && form.get('city').touched" class="alert alert-danger">
+        Місто є обов'язковим для введення!
+      </div>
+  </div>
+  <button type="submit" class="btn btn-success" [disabled]="!form.valid">Відправити</button>
+  <button type="button" class="btn btn-primary" (click)="reset()">Скинути</button>
+</form>

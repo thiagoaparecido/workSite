@@ -1,0 +1,146 @@
+<button class="btn btn-outline-primary search" (click)="changeShowForm()">
+  Фільтр <img class="caret" [class.active]="!showForm" src="./assets/caret.png"></button>
+<form *ngIf="showForm" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="form-row">
+    <div class="col-md">
+      <label for="userName">Ім'я:</label>
+      <input
+        type="text"
+        id="userName"
+        name="userName"
+        class="form-control"
+        placeholder="Ім'я"
+        formControlName="userName">
+    </div>
+    <div class="col-md">
+      <label for="profession">Професія:</label>
+      <select
+        id="profession"
+        name="profession"
+        class="form-control"
+        placeholder="Професія"
+        formControlName="profession">
+        <option value="null">професія</option>
+        <option [value]="i" *ngFor="let profession of professions; let i = index">{{profession}}</option>
+      </select>
+    </div>
+    <div class="col-md">
+      <label for="city">Місто:</label>
+      <input
+        type="text"
+        id="city"
+        name="city"
+        class="form-control"
+        placeholder="Місто"
+        formControlName="city">
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md">
+      <label for="gender">Стать:</label>
+      <select name="gender" id="gender" class="form-control" [formControlName]="'gender'">
+        <option [value]="null">чол/жін</option>
+        <option [value]="'male'">чоловік</option>
+        <option [value]="'female'">жінка</option>
+      </select>
+    </div>
+    <div class="col-md" formGroupName="experienceGroup">
+      <label for="experience1">Стаж:</label>
+      <div class="form-row">
+        <div class="col-md">
+          <input id="experience1" type="number" class="form-control" placeholder="від" formControlName="experience1">
+        </div>
+        <div class="col-md">
+          <input id="experience2" type="number" class="form-control" placeholder="до" formControlName="experience2">
+        </div>
+      </div>
+    </div>
+    <div class="col-md" formGroupName="salaryGroup">
+      <label for="salary1">Зарплатня:</label>
+      <div class="form-row">
+        <div class="col-md">
+          <input id="salary1" type="number" class="form-control" placeholder="від" formControlName="salary1">
+        </div>
+        <div class="col-md">
+          <input id="salary2" type="number" class="form-control" placeholder="до" formControlName="salary2">
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--button class="btn btn-primary search">Пошук</button-->
+</form>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col" (click)="changeSort('userName')">
+      Ім'я
+      <img
+        *ngIf="sortProp == 'userName'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('gender')">
+      Стать
+      <img
+        *ngIf="sortProp == 'gender'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('profession')">
+      Професія
+      <img
+        *ngIf="sortProp == 'profession'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('city')">
+      Місто
+      <img
+        *ngIf="sortProp == 'city'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('experience')">
+      Стаж
+      <img
+        *ngIf="sortProp == 'experience'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col" (click)="changeSort('salary')">
+      Зарплатня
+      <img
+        *ngIf="sortProp == 'salary'"
+        class="caret" src="./assets/caret.png"
+        [class.active]="sortOrder == 'desc'"
+        alt="caret">
+    </th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr
+    *ngFor="let resume of $resumes | async |
+    filterArray:
+      searchParams:
+      {'experienceGroup': 'experience', 'salaryGroup': 'salary'}:
+      {'userName': ['[\\wа-я]+','ig'], 'city': ['[\\wа-я]+','ig']}
+    | orderByProp:sortProp:sortOrder">
+    <td>{{ resume.userName }}</td>
+    <td>{{ resume.gender | gender }}</td>
+    <td>{{ professions[resume.profession] }}</td>
+    <td>{{ resume.city }}</td>
+    <td>{{ resume.experience }}</td>
+    <td>{{ resume.salary }}</td>
+    <td>
+      <button class="btn btn-sm btn-primary" (click)="goToDetail(resume)">Детальніше</button>
+    </td>
+  </tr>
+  </tbody>
+</table>

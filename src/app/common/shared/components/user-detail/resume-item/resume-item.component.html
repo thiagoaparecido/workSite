@@ -1,0 +1,11 @@
+<div class="card resume-item-container" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ profession }}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{user.firstName}} {{user.surName}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">{{resume.city}}</h6>
+    <h6 class="card-subtitle mb-2 text-muted">Стаж: {{resume.experience}}</h6>
+    <p class="card-text">{{resume.description}}</p>
+    <button (click)="goToResumeDetail()" class="btn btn-primary">Детальніше</button>
+    <button (click)="delete()" class="btn btn-danger">Видалити</button>
+  </div>
+</div>
