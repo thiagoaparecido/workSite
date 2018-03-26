@@ -1,14 +1,16 @@
 import {Injectable} from '@angular/core';
 
+import * as _ from 'lodash';
 import {switchMap} from 'rxjs/operators';
 import {Observable} from 'rxjs/Observable';
-import {DexieService} from 'ngx-dexie/dexie.service';
 import {fromPromise} from 'rxjs/observable/fromPromise';
+import {of} from 'rxjs/observable/of';
+import {DexieService} from 'ngx-dexie/dexie.service';
 
-import {Resume} from 'common/shared/models/resume';
-import {resumes} from 'common/shared/constants/resumes';
+import {Resume} from 'common/core/models/resume';
+import {resumes} from 'common/core/constants/resumes';
 import {UserService} from 'common/core/services/user.service';
-import {User} from 'common/shared/models/user';
+import {User} from 'common/core/models/user';
 
 @Injectable()
 export class ResumeService {
@@ -50,5 +52,85 @@ export class ResumeService {
 
   updateResume(userId: number, resumeId: number, resume: any): Observable<any> {
     return fromPromise(this.dexieService.update('resumes', resumeId, resume));
+  }
+
+  getFilterResumes(params: any, group: any, regRule: any): Observable<Resume[]> {
+    return this.getAllResumes()
+      .pipe(
+        switchMap((array): Observable<Resume[]> => {
+          let result = array;
+          let obj = _.clone(params);
+          for (const key in group) {
+            obj = this.checkGroupControl(key, group[key], obj);
+          }
+          const valueKeys = Object.keys(obj);
+          const rangePropsArray = [];
+
+          valueKeys.forEach((key) => {
+            if ( obj[key] && typeof obj[key] === 'object') {
+              const objectKeys = Object.keys(obj[key]);
+              if ((obj[key][objectKeys[0]] !== 0) && !obj[key][objectKeys[0]]) {
+                delete obj[key];
+              } else {
+                rangePropsArray.push(key);
+              }
+            }
+            if (!obj[key]) {
+              delete obj[key];
+            }
+          });
+
+          if (rangePropsArray.length) {
+            rangePropsArray.forEach(
+              (key) => {
+                result = _.filter(result, function(item) {
+                  return _.inRange(
+                    item[group[key]],
+                    obj[key][group[key] + 1],
+                    obj[key][group[key] + 2] + 1
+                  );
+                });
+                delete obj[key];
+              }
+            );
+          }
+
+          result = _.filter(result, (item) => {
+            let result: boolean;
+            for (const key in obj) {
+              if (regRule[key]) {
+                const regexp = new RegExp(obj[key], 'ig');
+                if (!regexp.test(item[key])) {
+                  return false;
+                }
+              } else {
+                if (item[key] != obj[key]) {
+                  return false;
+                }
+              }
+            }
+            return true;
+          });
+
+          return of(result);
+        })
+      );
+  }
+
+  private checkGroupControl(groupControl, control, params): void {
+    let group = _.clone(params);
+    if (group[groupControl][control + 1] && !group[groupControl][control + 2]) {
+      group[groupControl][control + 2] = group[groupControl][control + 1];
+    }
+    if (!group[groupControl][control + 1] && group[groupControl][control + 2]) {
+      group[groupControl][control + 1] = group[groupControl][control + 2];
+    }
+    if (group[groupControl][control + 1] > group[groupControl][control + 2]) {
+      group[groupControl] = {
+        [control + 1]: group[groupControl][control + 2],
+        [control + 2]: group[groupControl][control + 1]
+      };
+    }
+    return group;
   }
 }

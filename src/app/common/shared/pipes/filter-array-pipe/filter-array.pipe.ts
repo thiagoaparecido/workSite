@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+
 import * as _ from 'lodash';
 
 @Pipe({
@@ -9,8 +10,11 @@ export class FilterArrayPipe implements PipeTransform {
   transform(array: any, params: any, group: any, regRule: any): any {
     let result = array;
     let obj = _.clone(params);
-    obj = this.checkGroupControl('experienceGroup', 'experience', obj);
-    obj = this.checkGroupControl('salaryGroup', 'salary', obj);
+    for (const key in group) {
+      obj = this.checkGroupControl(key, group[key], obj);
+    }
+    //obj = this.checkGroupControl('experienceGroup', 'experience', obj);
+    //obj = this.checkGroupControl('salaryGroup', 'salary', obj);
     const valueKeys = Object.keys(obj);
     const rangePropsArray = [];
 
@@ -65,17 +69,6 @@ export class FilterArrayPipe implements PipeTransform {
 
   private checkGroupControl(groupControl, control, params): void {
     let group = _.clone(params);
-    /*if (group[groupControl][control + 1] > group[groupControl][control + 2]) {
-      group[groupControl] = {
-        [control + 1]: group[control + 2],
-        [control + 2]: group[control + 1]
-      };
-    }
-    if (!group[groupControl][control + 1] && group[groupControl][control + 2]) {
-      group[groupControl] = {
-        [control + 1]: group[control + 2]
-      };
-    }*/
     if (group[groupControl][control + 1] && !group[groupControl][control + 2]) {
       group[groupControl][control + 2] = group[groupControl][control + 1];
     }

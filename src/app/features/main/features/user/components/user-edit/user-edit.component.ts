@@ -8,8 +8,8 @@ import * as _ from 'lodash';
 import {Observable} from 'rxjs/Observable';
 
 import {UserService} from 'common/core/services/user.service';
-import {User} from 'common/shared/models/user';
-import {CanComponentDeactivate} from 'common/core/guards/can-deactivate.service';
+import {User} from 'common/core/models/user';
+import {CanComponentDeactivate} from 'common/core/guards/can-deactivate.guard';
 
 @Component({
   selector: 'app-user-edit',

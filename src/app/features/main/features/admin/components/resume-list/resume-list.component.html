@@ -126,11 +126,7 @@
   </thead>
   <tbody>
   <tr
-    *ngFor="let resume of $resumes | async |
-    filterArray:
-      searchParams:
-      {'experienceGroup': 'experience', 'salaryGroup': 'salary'}:
-      {'userName': ['[\\wа-я]+','ig'], 'city': ['[\\wа-я]+','ig']}
+    *ngFor="let resume of $resumes
     | orderByProp:sortProp:sortOrder">
     <td>{{ resume.userName }}</td>
     <td>{{ resume.gender | gender }}</td>

@@ -1,9 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 
-import {User} from 'common/shared/models/user';
-import {Resume} from 'common/shared/models/resume';
+import {User} from 'common/core/models/user';
+import {Resume} from 'common/core/models/resume';
 import {ResumeService} from 'common/core/services/resume.service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-resume-list',

@@ -8,7 +8,7 @@ import {switchMap} from 'rxjs/operators';
 
 import {StorageService} from './storage.service';
 import {UserService} from 'common/core/services/user.service';
-import {User} from 'common/shared/models/user';
+import {User} from 'common/core/models/user';
 
 @Injectable()
 export class AuthService {

@@ -7,10 +7,10 @@ import {Observable} from 'rxjs/Observable';
 import {ModalDialogService, SimpleModalComponent} from 'ngx-modal-dialog';
 import * as _ from 'lodash';
 
-import {Resume} from 'common/shared/models/resume';
+import {Resume} from 'common/core/models/resume';
 import {StorageService} from 'common/core/services/storage.service';
 import {AuthService} from 'common/core/services/auth.service';
-import {CanComponentDeactivate} from 'common/core/guards/can-deactivate.service';
+import {CanComponentDeactivate} from 'common/core/guards/can-deactivate.guard';
 import {ResumeService} from 'common/core/services/resume.service';
 import {ProfessionService} from 'common/core/services/profession.service';
 

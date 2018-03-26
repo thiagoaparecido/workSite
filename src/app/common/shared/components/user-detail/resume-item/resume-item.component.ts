@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {StorageService} from 'common/core/services/storage.service';
-import {User} from 'common/shared/models/user';
-import {Resume} from 'common/shared/models/resume';
+import {User} from 'common/core/models/user';
+import {Resume} from 'common/core/models/resume';
 import {ProfessionService} from 'common/core/services/profession.service';
 
 @Component({

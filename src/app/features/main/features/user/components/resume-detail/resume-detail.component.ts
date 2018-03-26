@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 
 import {ProfessionService} from 'common/core/services/profession.service';
 import {ResumeService} from 'common/core/services/resume.service';
-import {Resume} from 'common/shared/models/resume';
+import {Resume} from 'common/core/models/resume';
 import {StorageService} from 'common/core/services/storage.service';
 
 @Component({

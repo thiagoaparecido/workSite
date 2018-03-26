@@ -1,4 +1,4 @@
-import {User} from 'common/shared/models/user';
+import {User} from 'common/core/models/user';
 
 export let users: User[] = [
   {

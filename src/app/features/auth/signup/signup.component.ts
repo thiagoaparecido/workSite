@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 
 import {UserService} from 'common/core/services/user.service';
 import {Observable} from 'rxjs/Observable';
-import {User} from 'common/shared/models/user';
+import {User} from 'common/core/models/user';
 import {of} from 'rxjs/observable/of';
 import {switchMap} from 'rxjs/operators';
 

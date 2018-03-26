@@ -6,7 +6,7 @@ import {ModalDialogModule} from 'ngx-modal-dialog';
 import {AppRoutingModule} from '../../app-routing.module';
 import {AuthService} from './services/auth.service';
 import {StorageService} from './services/storage.service';
-import {CanDeactivateService} from './guards/can-deactivate.service';
+import {CanDeactivateGuard} from './guards/can-deactivate.guard';
 import {AuthGuard} from './guards/auth.guard';
 import {UserService} from 'common/core/services/user.service';
 import {ResumeService} from 'common/core/services/resume.service';
@@ -30,7 +30,7 @@ import {DatabaseModule} from 'common/core/modules/database/database.module';
   providers: [
     AuthService,
     AuthGuard,
-    CanDeactivateService,
+    CanDeactivateGuard,
     StorageService,
     UserService,
     ResumeService,

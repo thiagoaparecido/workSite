@@ -1,4 +1,4 @@
-import {Resume} from 'common/shared/models/resume';
+import {Resume} from 'common/core/models/resume';
 
 export let resumes: Resume[] = [
   {

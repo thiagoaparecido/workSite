@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 
-import {professions} from 'common/shared/constants/professions';
+import {professions} from 'common/core/constants/professions';
 
 @Injectable()
 export class ProfessionService {

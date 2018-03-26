@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {FormBuilder, FormGroup} from '@angular/forms';
 
-import * as _ from 'lodash';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {Subject} from 'rxjs/Subject';
 
-import {Resume} from 'common/shared/models/resume';
+import {Resume} from 'common/core/models/resume';
 import {StorageService} from 'common/core/services/storage.service';
 import {ResumeService} from 'common/core/services/resume.service';
 import {ProfessionService} from 'common/core/services/profession.service';
-import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'app-resume-list',
@@ -18,11 +18,13 @@ import {Observable} from 'rxjs/Observable';
 export class ResumeListComponent implements OnInit {
   form: FormGroup;
   professions: string[];
-  $resumes: Observable<Resume[]>;
+  $resumes: Resume[];
   sortProp: string;
   sortOrder: string;
   showForm = false;
   searchParams: any;
+
+  private searchData: Subject<any> = new Subject<any>();
 
   constructor(
     private resumeService: ResumeService,
@@ -36,7 +38,25 @@ export class ResumeListComponent implements OnInit {
     this.professions = this.professionService.getProfessions();
     this.initForm();
     this.searchParams = this.form.value;
-    this.$resumes = this.resumeService.getAllResumes();
+    this.resumeService.getAllResumes()
+      .subscribe((resumes: Resume[]) => {
+
+        this.$resumes = resumes;
+      });
+    this.searchData.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap(
+        (searchParams: any) => {
+          return this.resumeService.getFilterResumes(
+            searchParams,
+            {'experienceGroup': 'experience', 'salaryGroup': 'salary'},
+            {'userName': true, 'city': true});
+        }
+      )
+    ).subscribe((resumes: Resume[]) => {
+      this.$resumes = resumes;
+    });
   }
 
   changeShowForm(): void {
@@ -83,8 +103,6 @@ export class ResumeListComponent implements OnInit {
   }
 
   submit(): void {
-    /*this.checkGroupControl('experienceGroup', 'experience');
-    this.checkGroupControl('salaryGroup', 'salary');*/
     if (this.form.get('gender').value === 'null') {
       this.form.patchValue({
         gender: null
@@ -95,6 +113,10 @@ export class ResumeListComponent implements OnInit {
         profession: null
       });
     }
-    this.searchParams = this.form.value;
+    this.passSearchData(this.form.value);
+  }
+
+  private passSearchData(serachParams: any) {
+    this.searchData.next(serachParams);
   }
 }

@@ -5,8 +5,8 @@ import {DexieService} from 'ngx-dexie';
 import {Observable} from 'rxjs/Observable';
 import {fromPromise} from 'rxjs/observable/fromPromise';
 
-import {User} from 'common/shared/models/user';
-import {users} from 'common/shared/constants/users';
+import {User} from 'common/core/models/user';
+import {users} from 'common/core/constants/users';
 
 @Injectable()
 export class UserService {
