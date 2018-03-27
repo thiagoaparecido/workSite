@@ -7,6 +7,7 @@ import { ResumeListComponent } from './resume-list/resume-list.component';
 import { SuggestionListComponent } from './suggestion-list/suggestion-list.component';
 import { ResumeItemComponent } from './resume-item/resume-item.component';
 import {GenderPipeModule} from '../../pipes/gender-pipe/gender-pipe.module';
+import { SuggestionItemComponent } from './suggestion-item/suggestion-item.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import {GenderPipeModule} from '../../pipes/gender-pipe/gender-pipe.module';
     ResumeListComponent,
     ResumeItemComponent,
     SuggestionListComponent,
-    UserDetailComponent
+    UserDetailComponent,
+    SuggestionItemComponent
   ],
   exports: [
     UserDetailComponent

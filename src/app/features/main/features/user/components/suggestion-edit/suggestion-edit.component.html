@@ -1,0 +1,76 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="col-8 m-auto">
+  <h1>Пропозиція</h1>
+  <div class="form-group">
+    <label for="professions">Виберіть професію:</label>
+    <select
+      class="form-control"
+      id="professions"
+      name="professions"
+      [formControlName]='"profession"'>
+      <option *ngFor="let profession of professions; let i = index" [value]="i">{{profession}}</option>
+    </select>
+    <div *ngIf="!form.get('profession').valid && form.get('profession').touched" class="alert alert-danger">
+      Виберіть професію, поле обов'язкове для заповнення!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="city">Введіть місто в якому потрібно працювати:</label>
+    <input
+      type="text"
+      id="city"
+      name="city"
+      class="form-control"
+      formControlName="city">
+    <div *ngIf="!form.get('city').valid && form.get('city').touched" class="alert alert-danger">
+      Введіть місто, поле обов'язкове для заповнення!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="employerName">Вкажіть назву підприємства, або власне ім'я:</label>
+    <input
+      type="text"
+      id="employerName"
+      name="employerName"
+      class="form-control"
+      formControlName="employerName">
+    <div *ngIf="!form.get('employerName').valid && form.get('employerName').touched" class="alert alert-danger">
+      Введіть назву підприємства, або ім'я, поле обов'язкове для заповнення!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="salary">Вкажіть зарплату (грн):</label>
+    <input
+      type="number"
+      id="salary"
+      name="salary"
+      class="form-control"
+      formControlName="salary">
+    <div *ngIf="!form.get('salary').valid && form.get('salary').touched" class="alert alert-danger">
+      Введіть зарплату, поле обов'язкове для заповнення!
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="description">Коротко про роботу (рекомендуємо вказувати будь яку
+      наявну інформацію, що стосується роботи: умови роботи, графік роботи,
+      соціальний пакет та ін.):</label>
+    <textarea
+      rows="7"
+      id="description"
+      name="description"
+      class="form-control"
+      formControlName="description"></textarea>
+    <div *ngIf="!form.get('description').valid && form.get('description').touched">
+      <div *ngIf="form.get('description').errors['required']" class="alert alert-danger">
+        Дані про себе є обов'язковими для заповнення!
+      </div>
+      <div *ngIf="form.get('description').errors['minlength']" class="alert alert-danger">
+        Описові дані повинні містити не менше 20-ти символів!
+      </div>
+      <div *ngIf="form.get('description').errors['maxlength']" class="alert alert-danger">
+        Описові дані повинні містити не більше 4000 символів!
+      </div>
+    </div>
+  </div>
+  <button [disabled]="!form.valid" type="submit" class="btn btn-success">{{newFlag ? 'Додати' : 'Редагувати'}}</button>
+  <button (click)="reset()" type="button" class="btn btn-primary">Скинути</button>
+</form>

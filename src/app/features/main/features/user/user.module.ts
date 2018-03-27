@@ -12,6 +12,8 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { ResumeDetailComponent } from './components/resume-detail/resume-detail.component';
 import { ResumeEditComponent } from './components/resume-edit/resume-edit.component';
 import {UserDetailModule} from 'common/shared/components/user-detail/user-detail.module';
+import { SuggestionDetailComponent } from './components/suggestion-detail/suggestion-detail.component';
+import { SuggestionEditComponent } from './components/suggestion-edit/suggestion-edit.component';
 
 @NgModule({
   imports: [
@@ -27,7 +29,9 @@ import {UserDetailModule} from 'common/shared/components/user-detail/user-detail
     ResumeEditComponent,
     UserComponent,
     UserDataComponent,
-    UserEditComponent
+    UserEditComponent,
+    SuggestionDetailComponent,
+    SuggestionEditComponent
   ]
 })
 export class UserModule {}

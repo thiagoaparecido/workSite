@@ -1,0 +1,63 @@
+<div *ngIf="suggestion" class="row">
+  <div class="col-md-8 m-auto">
+    <div class="row">
+      <h1 class="col-md-12">Пропозиція</h1>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Професія</h5>
+          </div>
+          <div class="col-sm-6">
+            {{profession}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Роботодавець</h5>
+          </div>
+          <div class="col-sm-6">
+            {{suggestion.employerName}}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Місто</h5>
+          </div>
+          <div class="col-sm-6">
+            {{ suggestion.city }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-sm-6">
+            <h5>Зарплатня</h5>
+          </div>
+          <div class="col-sm-6">
+            {{ suggestion.salary }}
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-12">
+            <h5>Коротко про роботу</h5>
+          </div>
+          <div class="col-12">
+            <div class="alert alert-secondary">{{ suggestion.description }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <button [routerLink]="['edit']" class="btn btn-primary">Редагувати</button>
+        <button (click)="deleteSuggestion()" class="btn btn-danger">Видалити</button>
+      </div>
+    </div>
+  </div>
+</div>

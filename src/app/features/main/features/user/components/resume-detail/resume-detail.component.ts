@@ -42,5 +42,4 @@ export class ResumeDetailComponent implements OnInit {
         }
       );
   }
-
 }
