@@ -1,3 +1,23 @@
-<p>
-  suggestion-list works!
-</p>
+<div class="row">
+  <div class="col-12 btn-container">
+    <button [routerLink]="['/user','suggestion','new']" class="btn btn-primary" type="button">
+      Додати
+    </button>
+  </div>
+  <div class="col-12">
+    <div class="row justify-content-around">
+      <app-suggestion-item
+        [user]="user"
+        [suggestion]="suggestion"
+        *ngFor="let suggestion of suggestions"
+        (deleteSuggestion)="deleteSuggestion($event)"></app-suggestion-item>
+    </div>
+    <div *ngIf="!noSuggestionsMsg " class="col-12">
+      <div class="row justify-content-around">
+        <span>
+          У вас немає пропозицій. Натисніть "Додати" для створення нової пропозиції
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

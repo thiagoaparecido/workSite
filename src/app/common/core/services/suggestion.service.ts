@@ -1,63 +1,52 @@
 import {Injectable} from '@angular/core';
-
-import * as _ from 'lodash';
-import {switchMap} from 'rxjs/operators';
-import {Observable} from 'rxjs/Observable';
-import {fromPromise} from 'rxjs/observable/fromPromise';
-import {of} from 'rxjs/observable/of';
 import {DexieService} from 'ngx-dexie/dexie.service';
-
-import {Resume} from 'common/core/models/resume';
-import {resumes} from 'common/core/constants/resumes';
 import {UserService} from 'common/core/services/user.service';
 import {User} from 'common/core/models/user';
+import {switchMap} from 'rxjs/operators';
+import {fromPromise} from 'rxjs/observable/fromPromise';
+import {Observable} from 'rxjs/Observable';
+import {Resume} from 'common/core/models/resume';
+import {Suggestion} from 'common/core/models/suggestion';
+import {of} from 'rxjs/observable/of';
+import * as _ from 'lodash';
 
 @Injectable()
-export class ResumeService {
+export class SuggestionService {
 
   constructor(
     private userService: UserService,
     private dexieService: DexieService
   ) {}
 
-  resumes: Resume[] = resumes;
+  addSuggestion(userId: number, suggestion: any): Observable<any> {
+    suggestion.userId = userId;
+    return fromPromise(this.dexieService.addOne('suggestions', suggestion));
+  }
 
-  addResume(userId: number, resume: any): Observable<any> {
-    return this.userService.getUser(userId)
+  deleteSuggestion(suggestionId: number): Observable<any> {
+    return fromPromise(this.dexieService.deleteOne('suggestions', suggestionId));
+  }
+
+  getSuggestions(suggestionId: number): Observable<Suggestion[]> {
+    return fromPromise(this.dexieService.filter('suggestions', (resume) => resume.userId === suggestionId).toArray());
+  }
+
+  getAllSuggestions(): Observable<Suggestion[]> {
+    return fromPromise(this.dexieService.toArray('suggestions'));
+  }
+
+  getSuggestion(suggestionId: number): Observable<Suggestion> {
+    return fromPromise(this.dexieService.getByPrimaryKey('suggestions', suggestionId));
+  }
+
+  updateSuggestion(suggestionId: number, suggestion: any): Observable<any> {
+    return fromPromise(this.dexieService.update('suggestions', suggestionId, suggestion));
+  }
+
+  getFilterSuggestions(params: any, group: any, regRule: any): Observable<Suggestion[]> {
+    return this.getAllSuggestions()
       .pipe(
-        switchMap((user: User): Observable<any> => {
-          resume.userId = userId;
-          resume.userName = `${user.firstName} ${user.surName}`;
-          resume.gender = user.gender;
-          return fromPromise(this.dexieService.addOne('resumes', resume));
-        })
-      );
-  }
-
-  deleteResume(userId: number, resumeId: number): Observable<any> {
-    return fromPromise(this.dexieService.deleteOne('resumes', resumeId));
-  }
-
-  getAllResumes(): Observable<Resume[]> {
-    return fromPromise(this.dexieService.toArray('resumes'));
-  }
-
-  getResumes(userId: number): Observable<Resume[]> {
-    return fromPromise(this.dexieService.filter('resumes', (resume) => resume.userId === userId).toArray());
-  }
-
-  getResume(userId: number, resumeId: number): Observable<Resume> {
-    return fromPromise(this.dexieService.getByPrimaryKey('resumes', resumeId));
-  }
-
-  updateResume(userId: number, resumeId: number, resume: any): Observable<any> {
-    return fromPromise(this.dexieService.update('resumes', resumeId, resume));
-  }
-
-  getFilterResumes(params: any, group: any, regRule: any): Observable<Resume[]> {
-    return this.getAllResumes()
-      .pipe(
-        switchMap((array): Observable<Resume[]> => {
+        switchMap((array): Observable<Suggestion[]> => {
           let result = array;
           let obj = _.clone(params);
           if (group) {

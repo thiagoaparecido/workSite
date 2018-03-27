@@ -12,6 +12,7 @@ import {UserService} from 'common/core/services/user.service';
 import {ResumeService} from 'common/core/services/resume.service';
 import {ProfessionService} from 'common/core/services/profession.service';
 import {DatabaseModule} from 'common/core/modules/database/database.module';
+import {SuggestionService} from 'common/core/services/suggestion.service';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import {DatabaseModule} from 'common/core/modules/database/database.module';
     StorageService,
     UserService,
     ResumeService,
+    SuggestionService,
     ProfessionService
   ]
 })

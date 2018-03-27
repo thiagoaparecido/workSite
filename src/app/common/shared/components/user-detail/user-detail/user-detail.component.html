@@ -70,6 +70,6 @@
 </ul>
 <ng-container *ngIf="user">
   <app-resume-list *ngIf="tab" [user]="user"></app-resume-list>
-  <app-suggestion-list *ngIf="!tab"></app-suggestion-list>
+  <app-suggestion-list *ngIf="!tab" [user]="user"></app-suggestion-list>
 </ng-container>
 

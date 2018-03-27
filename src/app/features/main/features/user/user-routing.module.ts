@@ -8,6 +8,8 @@ import {ResumeDetailComponent} from './components/resume-detail/resume-detail.co
 import {ResumeEditComponent} from './components/resume-edit/resume-edit.component';
 import {UserResolver} from './resolvers/user-resolver.service';
 import {CanDeactivateGuard} from 'common/core/guards/can-deactivate.guard';
+import {SuggestionEditComponent} from './components/suggestion-edit/suggestion-edit.component';
+import {SuggestionDetailComponent} from './components/suggestion-detail/suggestion-detail.component';
 
 const routes: Routes = [
   { path: '', component: UserComponent, children: [
@@ -15,7 +17,10 @@ const routes: Routes = [
       { path: 'edit', component: UserEditComponent, resolve: { user: UserResolver }, canDeactivate: [CanDeactivateGuard] },
       { path: 'resume', component: ResumeDetailComponent },
       { path: 'resume/new', component: ResumeEditComponent, data: { new: true } },
-      { path: 'resume/edit', component: ResumeEditComponent, data: { new: false }, canDeactivate: [CanDeactivateGuard] }
+      { path: 'resume/edit', component: ResumeEditComponent, data: { new: false }, canDeactivate: [CanDeactivateGuard] },
+      { path: 'suggestion', component: SuggestionDetailComponent },
+      { path: 'suggestion/new', component: SuggestionEditComponent, data: { new: true } },
+      { path: 'suggestion/edit', component: SuggestionEditComponent, data: { new: false }, canDeactivate: [CanDeactivateGuard] }
     ] }
   ];
 
